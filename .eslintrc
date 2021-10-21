@@ -1,0 +1,73 @@
+{
+  "extends": "react-app",
+  "rules": {
+    /*
+      https://eslint.org/docs/rules/
+      Some rules are commented since they are not yet supported by create-react-app's eslint version.
+    */
+
+    /* Possible Errors */
+    "no-console": ["warn", { "allow": ["error"] }],
+    "no-debugger": "warn",
+    "no-dupe-else-if": "warn",
+    "no-extra-semi": "warn",
+    "no-irregular-whitespace": "warn",
+    //"no-loss-of-precision": "error",
+    "no-setter-return": "warn",
+    "no-unsafe-finally": "warn",
+    // "no-promise-executor-return": "warn",
+
+    /* Best Practices */
+    "accessor-pairs": "error",
+    // "default-case-last": "warn",
+    "dot-notation": "warn",
+    "no-eq-null": "warn",
+    "no-eval": "error",
+    "no-implicit-globals": "warn",
+    "no-multi-spaces": "warn",
+    "no-return-await": "warn",
+    "no-useless-catch": "warn",
+    "no-with": "error",
+    "require-await": "warn",
+    "wrap-iife": "warn",
+
+    /* Stylistic Issues */
+    "array-bracket-spacing": "warn",
+    "brace-style": ["warn", "stroustrup", { "allowSingleLine": true }],
+    "comma-spacing": ["warn", { "before": false, "after": true }],
+    "comma-style": ["warn", "last"],
+    "computed-property-spacing": ["warn", "never"],
+    "func-call-spacing": ["warn", "never"],
+    "indent": ["warn", 2, { "SwitchCase": 1 }],
+    "jsx-quotes": ["warn", "prefer-single"],
+    "key-spacing": ["warn", { "afterColon": true }],
+    "keyword-spacing": ["warn", { "after": true }],
+    "linebreak-style": ["warn", "unix"],
+    "no-bitwise": "warn",
+    "no-multiple-empty-lines": ["warn", { "max": 1 }],
+    "no-nested-ternary": "warn",
+    "no-trailing-spaces": "warn",
+    "quotes": ["warn", "single", { "allowTemplateLiterals": true }],
+    "semi": ["warn", "never"],
+    "spaced-comment": ["warn", "always"],
+
+    /* ES6 */
+    "arrow-spacing": "warn",
+    "no-var": "warn",
+    "prefer-const": "warn",
+    "import/no-anonymous-default-export": "off",
+
+    /* React */
+    "react-hooks/exhaustive-deps": "off"
+  },
+
+  "overrides": [
+    {
+      "files": ["*.styles.js"],
+      "rules": {
+        /* Eslint gets confused here with styled-components */
+        "indent": "off"
+      }
+    }
+  ]
+}

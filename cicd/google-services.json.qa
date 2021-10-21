@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "397013026245",
+    "project_id": "test-vg-8864b",
+    "storage_bucket": "test-vg-8864b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:397013026245:android:e4ae64f4bed9c55ad977ac",
+        "android_client_info": {
+          "package_name": "com.velocityglobal.customermanagement"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "397013026245-un2im45nd6vee6jk358oqlb529sjnp2k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAC1ahrC4g2ehi9366gw0LxJlnIhQygTak"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "397013026245-un2im45nd6vee6jk358oqlb529sjnp2k.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "397013026245-6eujk2j4m4jjlf1oeghoqlj4if6ur1ag.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.velocityglobal.customermanagement"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

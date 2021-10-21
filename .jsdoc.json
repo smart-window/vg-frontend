@@ -1,0 +1,24 @@
+{
+  "plugins": [
+    "node_modules/better-docs/category"
+  ],
+  "recurseDepth": 10,
+  "opts": {
+    "recurse": true,
+    "destination": "./docs/",
+    "template": "node_modules/better-docs"
+  },
+  "source": {
+    "include": ["src"],
+    "includePattern": ".+\\.js(doc|x)?$"
+  },
+  "sourceType": "module",
+  "tags": {
+    "allowUnknownTags": ["category", "subcategory"],
+    "dictionaries": ["jsdoc", "closure"]
+  },
+  "templates": {
+    "cleverLinks": false,
+    "monospaceLinks": false
+  }
+}

@@ -1,0 +1,133 @@
+stages:
+  - install
+  - test
+  - build
+  - deploy
+
+image: node:14.15.1-alpine3.12
+
+cache:
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+    - node_modules
+
+install:
+  stage: install
+  script:
+    - yarn install
+
+test:
+  stage: test
+  script:
+    - yarn test
+
+lint:
+  stage: test
+  script:
+    - yarn lint
+
+build_spa:
+  stage: build
+  artifacts:
+    paths:
+      - build/*
+    expire_in: 1 hrs
+  only:
+    - dev
+    - qa
+    - prod
+  environment:
+    name: $CI_COMMIT_BRANCH
+  script:
+    - yarn build
+
+build_expo_ota:
+  stage: build
+  only:
+    - dev
+    - qa
+    - prod
+  environment:
+    name: $CI_COMMIT_BRANCH
+  variables:
+    EXPO_TOKEN: npWx2YDDhauR4-_Ktd_hvygTLtwBYK9ixGDphdyh
+  script:
+    - npm install -g expo-cli
+    - expo publish --release-channel $CI_COMMIT_BRANCH
+
+build_expo_native_ios:
+  stage: build
+  only:
+    refs:
+      - dev
+      - qa
+      - prod
+    variables:
+      - $BUILD_NATIVE != "FALSE"
+  environment:
+    name: $CI_COMMIT_BRANCH
+  variables:
+    EXPO_TOKEN: npWx2YDDhauR4-_Ktd_hvygTLtwBYK9ixGDphdyh
+  script:
+    - cp cicd/GoogleService-Info.plist.$CI_COMMIT_BRANCH GoogleService-Info.plist
+    - npm install -g expo-cli
+    - expo build:ios --non-interactive -t archive --release-channel $CI_COMMIT_BRANCH --no-wait
+
+build_expo_native_android:
+  stage: build
+  only:
+    refs:
+      - dev
+      - qa
+      - prod
+    variables:
+      - $BUILD_NATIVE != "FALSE"
+  environment:
+    name: $CI_COMMIT_BRANCH
+  variables:
+    EXPO_TOKEN: npWx2YDDhauR4-_Ktd_hvygTLtwBYK9ixGDphdyh
+  script:
+    - cp cicd/google-services.json.$CI_COMMIT_BRANCH google-services.plist
+    - npm install -g expo-cli
+    - expo build:android --non-interactive -t app-bundle --release-channel $CI_COMMIT_BRANCH --no-wait
+
+.deploy_template: &template
+  stage: deploy
+  image: python:latest
+  needs: ["build_spa"]
+  script:
+    - pip install awscli
+    - aws s3 sync build/ $AWS_BUCKET --delete
+    - aws cloudfront create-invalidation --distribution-id $AWS_CLOUDFRONT_DISTRIBUTION_ID --paths '/*'
+
+deploy_dev:
+  <<: *template
+  only:
+    - dev
+  environment:
+    name: dev
+    url: https://dev.beta.velocityglobal.com
+
+deploy_qa:
+  <<: *template
+  only:
+    - qa
+  environment:
+    name: qa
+    url: https://qa.beta.velocityglobal.com
+
+# deploy_staging:
+#   <<: *template
+#   only:
+#     - staging
+#   environment:
+#     name: staging
+#     url: https://staging.beta.velocityglobal.com
+
+deploy_prod:
+  <<: *template
+  only:
+    - prod
+  environment:
+    name: prod
+    url: https://beta.velocityglobal.com

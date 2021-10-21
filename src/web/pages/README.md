@@ -1,0 +1,1 @@
+Use this folder for components that map to a React Route.
